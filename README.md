@@ -1,4 +1,4 @@
-# Cosmetic-Shop
+# Cosmetics-Shop
 Individual Project Assignment for the Spring Advanced Course @ SoftUni.
 
 Try it - https://kozmetichno.herokuapp.com/
