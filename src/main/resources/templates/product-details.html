@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+
+<div class="container mt-4">
+    <div>
+        <div class="card elegant-color" style="margin-top: 90px;" th:object="${productDetails}">
+            <img th:src="*{imageUrl}" class="rounded mx-auto d-block" width="250" height="250" alt="Card image cap">
+            <!--Card content-->
+            <div class="card-body text-center">
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <h5 class="card-title white-text py-3" th:text="*{name}">EXTRAVAGANZA</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <h5 class="card-title white-text py-3" th:text="*{producer}">AVON</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <h5 class="card-title white-text py-3" th:text="*{description}">Some description</h5>
+                    </li>
+
+                    <li class="list-group-item">
+                        <h5 class="card-title white-text py-3" th:text="|*{price} BGN|">5.99 BGN</h5>
+                    </li>
+
+                </ul>
+
+                <p th:if="*{count == 1}" class="card-title white-text py-3">Last available</p>
+                <p th:if="*{count > 1 && count <= 5}" class="card-title white-text py-3">Limited quantity available</p>
+                <p th:if="*{count > 5 && count <= 10}" class="card-title white-text py-3">More than 5 available</p>
+                <p th:if="*{count > 10}" class="card-title white-text py-3">More than 10 available</p>
+
+                <th:block th:if="*{count > 0}">
+                    <a th:href="@{/shop/product/buy/{id}(id = *{id})}" class="btn btn-success my-3"><i
+                            class="fas fa-shopping-bag"></i> Buy</a>
+
+
+                </th:block>
+
+                <th:block th:if="*{count == 0}">
+                    <button type="disabled" class="btn btn-success my-3"><i class="fas fa-times"></i> Out of stock
+                    </button>
+                </th:block>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                        data-whatever="@mdo"><i class="fas fa-plus"></i> Add comment
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New comment</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <form th:action="@{/shop/product/comment/{id}(id = *{id})}" th:method="POST">
+
+                                    <div class="input-group mb-3">
+                                        <label for="rating"
+                                               class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Rating</label>
+                                        <select class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                                id="rating" name="rating">
+                                            <option value="5" selected>5</option>
+
+                                            <th:block>
+                                                <option th:each="number : ${#numbers.sequence(4, 1)}">
+                                                    <p th:text="${number}"></p>
+                                                </option>
+                                            </th:block>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input minlength="5" maxlength="500" required type="text"
+                                               class="form-control" name="message" placeholder="Message: 5-500 symbols"/>
+                                    </div>
+
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-primary" onclick="this.form.submit(); this.disabled = true;">Add</button>
+                                    </div>
+
+                                </form>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+
+                    <a th:href="@{/shop/product/edit/{id}(id = *{id})}" class="btn btn-info my-3"><i
+                            class="fas fa-edit"></i> Edit</a>
+
+
+                    <div class="row justify-content-center">
+                        <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
+                                class="btn btn-danger my-3"><i
+                                class="fas fa-trash-alt"></i>
+                            Delete
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-left">
+                                    Do you really want to delete this product !
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <a th:href="@{/shop/product/delete/{id}(id = *{id})}" class="btn btn-danger btn-lg"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </th:block>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center darken-grey-text mb-4">
+        <h1 class="font-bold mt-4 mb-3 h5">Go back to shop</h1>
+        <a class="btn btn-light btn-lg" th:href="@{/shop/all}"><i class="far fa-hand-point-left fa-2x"></i></a>
+    </div>
+
+
+    <div class='container'>
+        <h2 class="page-header text-center" th:text="|Comments: *{productDetails.getComments().size()}|">Comments
+            |0| </h2>
+
+
+        <!-- Large modal -->
+        <div class="row justify-content-center">
+            <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target=".bd-example-modal-lg"><i
+                    class="fas fa-comments fa-2x"></i></button>
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <th:block th:if="*{productDetails.getComments().isEmpty()}">
+                            <h5 class="modal-title" id="commentOne">No comments</h5>
+                        </th:block>
+                        <th:block th:if="*{!productDetails.getComments().isEmpty()}">
+                            <h5 class="modal-title" id="commentTwo">All comments</h5>
+                        </th:block>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="media comment-box mx-3 my-1" th:each="comment : ${productDetails.getComments()}"
+                         th:object="${comment}">
+                        <div class="media-left">
+                            <img width="75" height="75"
+                                 th:src="*{imageUrl}"
+                                 class="rounded-lg mt-2">
+                        </div>
+                        <div class="media-body mx-2">
+                            <h4 class="media-heading" th:text="*{username}">username</h4>
+                            <p th:text="|Message: *{message}|">message</p>
+                            <p th:text="|Rating: *{rating}|">rating</p>
+                            <p th:text="|Added on: *{addedOn}|">date</p>
+
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a th:href="@{/shop/product/delete/comment/{id}(id = *{id})}"
+                                   class="btn btn-danger btn-lg"><i class="fas fa-trash-alt"></i></a>
+                            </th:block>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

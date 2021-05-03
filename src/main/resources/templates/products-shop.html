@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+<div class="container my-2">
+
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+        <div class="product text-center">
+            <a th:href="@{/products/add}">
+                <img th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615826921/plus_xigksk.webp}"
+                     width="200" height="200">
+            </a>
+            <div class="text-center">
+                <h4>Add your product</h4>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
+        <div th:if="${products.isEmpty()}" class="product text-center">
+            <img th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615827253/no-products_mgr9rd.png}"
+                 width="250" height="250">
+            <div class="text-center">
+                <h4>No products yet...</h4>
+            </div>
+        </div>
+    </th:block>
+
+    <th:block th:if="${!products.isEmpty()}">
+        <div class="my-3 col-sm-12 d-flex justify-content-center">
+            <input id="searchInput" class="form-control mr-sm-2 w-50 text-center"
+                   placeholder="Search" aria-label="Search">
+        </div>
+    </th:block>
+
+
+    <div class="row d-flex justify-content-center g-1" id="productsList">
+    </div>
+</div>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+<script th:src="@{/js/search-bar.js}"></script>
+
+</html>

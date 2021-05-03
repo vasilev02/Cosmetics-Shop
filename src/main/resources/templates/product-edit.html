@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+    <body>
+
+        
+
+
+      <div class="container register-form">
+        <div class="form" style="margin-top: 50px;">
+            <div class="note">
+                <p th:text="|Edit product: ${productEditDetails.name} by ${productEditDetails.producer}|" style="font-size: 130%;">Edit product Product name</p>
+            </div>
+    
+            <form th:action="@{/shop/product/edit/{id}(id = ${productEditDetails.id})}" th:method="POST" th:object="${productEditBindingModel}" enctype="multipart/form-data">
+            <div class="form-content text-break">
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <p class="font-weight-light" th:text="|Current price: ${productEditDetails.price}|"></p>
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{price}" type="text" class="form-control" placeholder="Price *"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+                        <div class="form-group">
+                            <p class="font-weight-light" th:text="|Current count: ${productEditDetails.count}|"></p>
+                        </div>
+                        <div class="form-group">
+                            <input th:field="*{count}" type="text" class="form-control" placeholder="Count *"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('count')}" th:errors="*{count}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label for="add-title-image" class="font-weight-bold">Picture</label>
+                            <input type="file" class="form-control-file" id="add-title-image" name="image" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <p class="font-weight-light" th:text="|Current description: ${productEditDetails.description}|"></p>
+                        </div>
+                        <div class="form-group">
+                            <textarea th:field="*{description}" class="form-control"
+                                      placeholder="More description *"></textarea>
+                        </div>
+                        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-lg btn-dark" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 40px;">
+                        Edit product
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Message</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you really want to edit this product !
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-dark btn-lg text-align=center" type="submit" onclick="this.form.submit(); this.disabled = true;">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        </div>
+    </div>
+
+
+        <section>
+          <div class="container">
+            <div class="row align-items-center">
+              <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                  <img class="img-fluid rounded-circle" th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1616323738/annie-spratt-fiMx7fLi5F8-unsplash_w28wot.jpg}" alt="Image">
+                </div>
+              </div>
+              <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                  <h2 class="display-4">Makeup can contribute to our success...</h2>
+                  <p><i class="fas fa-check-double fa-5x"></i></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+    
+    </body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

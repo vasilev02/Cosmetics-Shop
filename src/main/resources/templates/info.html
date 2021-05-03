@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+    <body>
+
+      <section>
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+              <div class="p-5">
+                <img class="img-fluid rounded-circle" th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615826864/information_rqx4gp.png}" alt="Image">
+              </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+              <div class="p-5">
+                <h2 class="display-4">Site for what..?</h2>
+                <p class="display-8">For those who tend to get best products with best prices</p>
+
+
+                <h2 class="display-4">Our vision..?</h2>
+                <p class="display-8">Taking care of people</p>
+
+                <h2 class="display-4">The GOAL..?</h2>
+                <p class="display-8">Expanding and build confidence in our customers</p>
+                
+                <h2 class="display-4">My email..@</h2>
+                <p class="display-8">valentin7969@gmail.com</p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    
+    </body>
+
+<footer>
+  <div class="card text-center">
+    <div class="card-header">
+
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Cosmetics for everyone</h5>
+      <p class="card-text">Helping people find the best cosmetic and build confidence</p>
+      <a th:href="@{/}" class="btn btn-dark">Go home</a>
+    </div>
+    <div class="card-footer text-muted">
+      &copy; All rights reserved
+    </div>
+  </div>
+</footer>
+
+</html>

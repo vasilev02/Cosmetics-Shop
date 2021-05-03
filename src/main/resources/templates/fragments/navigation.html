@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand text-center" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+            <div class="navbar-nav" style="padding-right: 75px">
+
+                <th:block sec:authorize="isAnonymous()">
+                    <a class="nav-item nav-link" th:href="@{/users/login}">Login</a>
+                    <a class="nav-item nav-link" th:href="@{/users/register}">Register</a>
+                </th:block>
+
+                <th:block sec:authorize="isAuthenticated()">
+
+                    <a class="nav-item nav-link" th:href="@{/shop/all}">Shop</a>
+
+                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-item nav-link" th:href="@{/products/add}">Add product</a>
+                        <a class="nav-item nav-link" th:href="@{/orders/all}">Orders</a>
+                    </th:block>
+
+                    <th:block sec:authorize="hasRole('ROLE_ROOT')">
+                        <a class="nav-item nav-link" th:href="@{/statistics}">Statistics</a>
+                        <a class="nav-item nav-link" th:href="@{/role/change}">Change role</a>
+                    </th:block>
+
+                    <a class="nav-item nav-link" th:href="@{/users/profile}">Profile</a>
+
+                    <form th:action="@{/logout}" method="POST">
+                        <button class="btn btn-dark px-0 text-light" type="submit">Logout</button>
+                    </form>
+
+                </th:block>
+
+            </div>
+        </div>
+    </nav>
+</th:block>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+
+<div class="container my-4">
+    <div class="row">
+        <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+            </div>
+            <div class="row user-detail text-break">
+                <div class="col-lg-12 col-sm-12 col-12" th:object="${user}">
+
+                    <div>
+                        <img th:src="*{imageUrl}" class="rounded-lg">
+                    </div>
+
+                    <button type="button" class="btn btn-sm btn-dark mt-2" data-toggle="modal"
+                            data-target="#exampleModalCenterPicture">
+                        <i class="fas fa-images"></i>
+                    </button>
+
+                    <h5 th:text="|Username: *{username}|">valo123</h5>
+                    <h5 th:text="|Email: *{email}|">test@gmail.com</h5>
+                    <hr>
+
+
+                    <div class="modal fade" id="exampleModalCenterPicture" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Change profile picture</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form th:action="@{/users/profile/picture}" th:method="POST"
+                                          enctype="multipart/form-data">
+
+                                        <div class="form-group">
+                                            <label for="add-title-image" class="font-weight-bold">Picture</label>
+                                            <input type="file" class="form-control-file" id="add-title-image" name="imageUrl"
+                                                   required="required">
+                                        </div>
+                                        <div class="modal-footer row justify-content-center">
+                                                <button type="submit" class="btn btn-lg btn-dark" onclick="this.form.submit(); this.disabled = true;">Change</button>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='container'>
+                        <!-- Large modal -->
+                        <div class="row justify-content-center">
+                            <button type="button" class="btn btn-lg btn-dark my-3" data-toggle="modal"
+                                    data-target=".bd-example-modal-lg">See orders
+                            </button>
+                        </div>
+
+                        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+                             aria-labelledby="myLargeModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+
+                                        <th:block class="my-auto" th:if="${orders.isEmpty()}">
+                                            <h5 class="modal-title" id="commentOne">No orders</h5>
+                                        </th:block>
+                                        <th:block class="my-auto" th:if="${!orders.isEmpty()}">
+                                            <h5 class="modal-title" id="commentTwo">All orders</h5>
+                                        </th:block>
+
+                                        <button type="button" class="close my-auto" data-dismiss="modal"
+                                                aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="media comment-box mx-3 my-1 text-left" th:each="order : ${orders}"
+                                         th:object="${order}">
+
+                                        <div class="media-body mx-2">
+                                            <h4 class="media-heading" th:text="|*{productName} by *{productProducer}|">
+                                                Product info</h4>
+                                            <p th:text="|Total price: *{totalPrice} BGN|">price</p>
+
+                                            <th:block th:if="*{isFinished}">
+                                                <p th:text="|Satus: finished|">rating</p>
+                                            </th:block>
+                                            <th:block th:unless="*{isFinished}">
+                                                <p th:text="|Satus: in progress|">rating</p>
+                                            </th:block>
+
+
+                                            <p th:text="|Created on: *{createdOn}|">date</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-lg btn-dark" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            Delete account
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-left">
+                                    Do you really want to delete your profile !
+                                </div>
+
+                                <th:block sec:authorize="hasRole('ROLE_USER')">
+                                    <div class="modal-footer d-flex justify-content-center">
+                                        <a th:href="@{/users/profile/delete/{id}(id = *{id})}"
+                                           class="btn btn-dark btn-lg">Submit</a>
+                                    </div>
+                                </th:block>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

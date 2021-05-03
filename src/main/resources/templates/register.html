@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+
+<div class="container register-form">
+    <div class="form" style="margin-top: 50px;">
+        <div class="note">
+            <p style="font-size:130%;">Register <i class="fas fa-user-plus fa-2x"></i></p>
+        </div>
+
+        <form th:action="@{/users/register}" th:method="POST" th:object="${userRegisterBindingModel}">
+            <div class="form-content">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" required minlength="4" maxlength="10"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-dark"
+                             role="alert">
+                            Error message!
+                        </div>
+                        <div th:if="${usernameExistsError}" class="alert alert-dark" role="alert">
+                            Username already exists
+                        </div>
+
+                        <div class="form-group">
+                            <input th:field="*{email}" type="text" class="form-control" placeholder="Email *" required pattern="([a-zA-Z0-9_.-]+)@([a-zA-Z]+)([\.])([a-zA-Z]+)" title="Enter email in right format"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="alert alert-dark"
+                             role="alert">
+                            Error message!
+                        </div>
+                        <div th:if="${emailExistsError}" class="alert alert-dark" role="alert">
+                            Email already exists
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <input th:field="*{password}" type="password" class="form-control"
+                                   placeholder="Password *" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}$" title="Minimum six characters with at least one uppercase,lowercase,digit and symbol"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-dark"
+                             role="alert">
+                            Error message!
+                        </div>
+
+                        <div class="form-group">
+                            <input th:field="*{confirmPassword}" type="password" class="form-control"
+                                   placeholder="Confirm password *" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{6,}$" title="Minimum six characters with at least one uppercase,lowercase,digit and symbol"/>
+                        </div>
+                        <div th:if="${passwords_error}" class="alert alert-dark" role="alert">
+                            Passwords not equals
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <button class="btn btn-dark btn-lg text-align=center" style="margin-top: 40px;"
+                            type="submit">Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615828718/03_byqskr.jpg}" alt="Image">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Love of beauty is taste. The creation of beauty is art.</h2>
+                    <p><i class="fas fa-palette fa-5x"></i> <i class="fas fa-paint-brush fa-5x"></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

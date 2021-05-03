@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1 class="display-3">Shop now</h1>
+
+    <p class="lead" style="margin-top: 35px;">
+        <a class="btn btn-dark btn-lg" th:href="@{/shop/all}"><i class="fas fa-shopping-cart fa-2x"></i></a>
+    </p>
+</div>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle"
+                         th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615828723/07_g50iuw.jpg}"
+                         alt="Image">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Shopping is my cardio.</h2>
+                    <p style="font-size: 20px;"><i class="fas fa-running fa-5x"></i></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

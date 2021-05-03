@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+
+<div class="container register-form">
+    <div class="form" style="margin-top: 50px;">
+        <div class="note">
+            <p style="font-size: 130%;">Add product <i class="fas fa-dove fa-2x"></i></p>
+        </div>
+
+        <form th:action="@{/products/add}" th:method="POST" th:object="${productAddBindingModel}" enctype="multipart/form-data">
+            <div class="form-content">
+
+                <div th:if="${nameProducerError}" class="alert alert-dark"
+                     role="alert">
+                    Product with this name and producer already exists
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <input th:field="*{name}" type="text" class="form-control" placeholder="Name *" required minlength="3" maxlength="15" title="Name must be between 3 and 15 characters"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-dark"
+                             role="alert">
+                            Error message!
+                        </div>
+
+                        <div class="form-group">
+                            <input th:field="*{producer}" type="text" class="form-control" placeholder="Producer *" required/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('producer')}" th:errors="*{producer}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+                        <div class="form-group">
+                            <input th:field="*{price}" type="text" class="form-control" placeholder="Price *" required/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+                        <div class="form-group">
+                            <input th:field="*{count}" type="text" class="form-control" placeholder="Count *"/>
+                        </div>
+                        <div th:if="${#fields.hasErrors('count')}" th:errors="*{count}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label for="add-title-image" class="font-weight-bold">Picture</label>
+                            <input th:field="*{image}" type="file" class="form-control-file" id="add-title-image" name="image" required="required">
+                        </div>
+                        <div th:if="${noImage}" class="alert alert-dark" role="alert">
+                            Choose picture
+                        </div>
+
+                        <div class="form-group">
+                            <textarea th:field="*{description}" class="form-control"
+                                      placeholder="More description *"></textarea>
+                        </div>
+                        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-dark" role="alert">
+                            Error message!
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-lg btn-dark" data-toggle="modal" data-target="#exampleModalCenter" style="margin-top: 40px;">
+                        Add product
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Message</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you really want to add this product !
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button class="btn btn-dark btn-lg" type="submit" onclick="this.form.submit(); this.disabled = true;" >Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1615828721/04_ocil0x.jpg}" alt="Image">
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <div class="p-5">
+                    <h2 class="display-4">Cosmetic can help you capture a moment...</h2>
+                    <p><i class="fas fa-camera-retro fa-5x"></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>

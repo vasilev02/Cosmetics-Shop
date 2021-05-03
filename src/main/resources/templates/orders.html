@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="~{fragments/head}"></th:block>
+
+<th:block th:include="~{fragments/navigation}"></th:block>
+
+<body>
+
+<div class="jumbotron text-center">
+    <h1 class="display-3">All orders</h1>
+
+    <th:block th:if="${!orders.isEmpty()}">
+        <p>Finish all orders and relax</p>
+    </th:block>
+    <th:block th:if="${orders.isEmpty()}">
+        <p>Orders list is empty</p>
+    </th:block>
+
+
+    <button type="button" class="btn btn-lg btn-dark mt-2" data-toggle="modal"
+            data-target="#exampleModalCenterPicture">
+        <i class="fas fa-calendar-alt"></i>
+    </button>
+
+    <div class="modal fade" id="exampleModalCenterPicture" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Calendar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="auto-jsCalendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:if="${orders.isEmpty()}" class="product text-center">
+    <img th:src="@{https://res.cloudinary.com/defiefioi/image/upload/v1616320521/ClipartKey_151080_ejxeuv.png}"
+         width="250" height="300">
+</div>
+
+<div class="container mt-5" style="margin-bottom: 50px;">
+    <div class="row d-flex justify-content-center g-1">
+
+        <div class="col-md-8">
+            <div class="product text-center" style="margin-top: 40px;">
+
+                <div class="jumbotron text-center text-break" th:each="order : ${orders}" th:object="${order}">
+
+                    <h3><i class="fas fa-clipboard-check fa-2x"></i></h3>
+                    <hr class="my-4">
+                    <h1 class="display-4" th:text="*{fullName}">Full name</h1>
+                    <p class="lead" th:text="|Username: *{username}|">Username: username</p>
+                    <p class="lead" th:text="|Email: *{email}|">Email: email</p>
+                    <p class="lead" th:text="|Mobile: *{phoneNumber}|">Mobile: mobile</p>
+
+                    <p class="lead" th:text="|Product name: *{productName}|">Product name: name</p>
+                    <p class="lead" th:text="|Product producer: *{productProducer}|">Product producer: producer</p>
+
+                    <p class="lead" th:text="|Count: *{count}|">Count: 2</p>
+                    <p class="lead" th:text="|Delivery option: *{deliveryOption}|">Delivery option: option</p>
+                    <p class="lead" th:text="|Address: *{address}|">Address: address</p>
+                    <p class="lead" th:text="|Additional information: *{additionalInformation}|">Additional information:
+                        info</p>
+
+                    <p class="lead" th:text="|Total price: *{totalPrice}|">Total price: price</p>
+                    <p class="lead" th:text="|Created on: *{createdOn}|">Created on: date</p>
+
+                    <hr class="my-4">
+                    <p class="lead">
+
+
+                    <div class="row justify-content-center">
+                        <button type="button" data-toggle="modal" data-target="#exampleModalCenter2"
+                                class="btn btn-dark my-3"><i class="fas fa-check"></i>
+                            Finish
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle2">Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-left">
+                                    Do you really want to finish this order !
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <a th:href="@{/orders/finish/{id}(id = *{id})}" class="btn btn-dark btn-lg"><i
+                                            class="fas fa-check"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row justify-content-center">
+                        <button type="button" data-toggle="modal" data-target="#exampleModalCenter"
+                                class="btn btn-danger my-3"><i
+                                class="fas fa-trash-alt"></i>
+                            Delete
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">Message</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-left">
+                                    Do you really want to delete this order !
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <a th:href="@{/orders/delete/{id}(id = *{id})}" class="btn btn-danger btn-lg"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+
+<th:block th:include="~{fragments/footer}"></th:block>
+
+</html>
